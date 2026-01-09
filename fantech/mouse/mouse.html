@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/logo.jpeg" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>CYBRIX NET | FANTECH</title>
+  </head>
+  <body>
+    <header>
+      <h1>FANTECH MOUSE</h1>
+      <button
+        id="cart-button"
+        title="Mostrar Carrito"
+        aria-label="Mostrar Carrito"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.2 6m0 0a1 1 0 102 0m-2 0h12m-7 0a1 1 0 112 0m-5-6h6"
+          />
+        </svg>
+        <span id="cart-count">0</span>
+      </button>
+    </header>
+
+    <main>
+      <div class="catalog" id="catalog">
+        <!-- Productos serán cargados aquí -->
+      </div>
+    </main>
+
+    <div
+      id="cart-details"
+      aria-live="polite"
+      aria-atomic="true"
+      aria-label="Detalles del carrito"
+    >
+      <h2>Carrito de Compras</h2>
+      <div id="cart-items"></div>
+      <div id="cart-total">Total: $0 USD</div>
+
+      <!-- Formulario agregado -->
+      <form id="whatsapp-form">
+        <label for="fullName">Nombre completo:</label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          required
+          placeholder="Nombre completo"
+        />
+        <label for="cedula">Cédula:</label>
+        <input
+          type="text"
+          id="cedula"
+          name="cedula"
+          required
+          placeholder="Número de cédula"
+        />
+        <label for="direccion">Dirección:</label>
+        <textarea
+          id="direccion"
+          name="direccion"
+          rows="2"
+          required
+          placeholder="Dirección completa"
+        ></textarea>
+        <label for="telefono">Teléfono:</label>
+        <input
+          type="tel"
+          id="telefono"
+          name="telefono"
+          required
+          placeholder="Número telefónico"
+        />
+        <button type="submit" id="whatsapp-order" disabled>
+          Solicitar por WhatsApp
+        </button>
+      </form>
+    </div>
+
+    <!-- Modal ficha técnica -->
+    <div
+      id="tech-modal"
+      class="modal"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="tech-title"
+      aria-describedby="tech-description"
+    >
+      <div class="modal-content">
+        <span class="close-modal" aria-label="Cerrar">&times;</span>
+        <h3 id="tech-title">Ficha Técnica</h3>
+        <div id="tech-content" class="tech-content"></div>
+        <button
+          id="btn-fabricante"
+          class="btn-fabricante"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ver en web del fabricante
+        </button>
+      </div>
+    </div>
+
+    <script type="module" src="mouse.js"></script>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

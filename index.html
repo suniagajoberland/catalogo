@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- =========================================== -->
+    <!-- ✅ SECCIÓN 1: META TAGS Y TÍTULO           -->
+    <!-- =========================================== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/logo.jpeg" />
+    <title>Cybrix net | Seguridad</title>
+  </head>
+  <body>
+    <!-- =========================================== -->
+    <!-- ✅ SECCIÓN 2: CONTENEDOR PRINCIPAL         -->
+    <!-- =========================================== -->
+    <div class="container">
+      <!-- HEADER PRINCIPAL -->
+      <header class="header">
+        <h1>Catálogo por Marcas</h1>
+        <p>Selecciona una Categoria</p>
+      </header>
+
+      <!-- =========================================== -->
+      <!-- ✅ NAVEGACIÓN MARCAS (VISIBLE INICIAL)     -->
+      <!-- =========================================== -->
+      <nav class="nav nav-brand" data-level="brands" id="navBrands">
+        <button class="btn" data-brand="hikvision">Hikvision</button>
+        <button class="btn" data-brand="hilook">Hilook</button>
+        <button class="btn" data-brand="dahua">Dahua</button>
+        <button class="btn" data-brand="ezviz" data-url="ezviz/ezviz.html">
+          Ezviz
+        </button>
+
+        <!-- ✅ NUEVAS MARCAS -->
+        <button class="btn" data-brand="maxiprint">Maxiprint</button>
+        <button class="btn" data-brand="fantech">Fantech</button>
+        <button class="btn" data-brand="vigi">Vigi</button>
+        <button
+          class="btn"
+          data-brand="ubiquiti"
+          data-url="ubiquiti/ubiquiti.html"
+        >
+          Ubiquiti
+        </button>
+        <button
+          class="btn"
+          data-brand="mikrotik"
+          data-url="mikrotik/mikrotik.html"
+        >
+          Mikrotik
+        </button>
+      </nav>
+
+      <!-- =========================================== -->
+      <!-- ✅ NAVEGACIÓN CATEGORÍAS                   -->
+      <!-- =========================================== -->
+      <nav
+        class="nav nav-cat"
+        data-level="categories"
+        id="navCategories"
+        style="display: none"
+      >
+        <!-- ✅ BOTÓN VOLVER SEPARADO DEL GRID -->
+        <div class="back-btn-container">
+          <button class="back-btn" onclick="goBack('brands')">← Volver</button>
+        </div>
+        <!-- GENERADO DINÁMICAMENTE AQUÍ -->
+        <div class="categories-grid"></div>
+      </nav>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- ✅ SECCIÓN 3: ESTILOS CSS COMPLETOS        -->
+    <!-- =========================================== -->
+    <style>
+      /* =========================================== */
+      /* RESET Y BASE */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* BODY Y FONDO - 100% ANCHO */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #4d4d4d 0%, #4d4d4d 100%);
+        min-height: 100vh;
+        padding: 0;
+        width: 100vw;
+        overflow-x: hidden;
+      }
+
+      /* CONTENEDOR PRINCIPAL */
+      .container {
+        width: 100%;
+        max-width: none;
+        height: 100vh;
+        margin: 0;
+        background: white;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      /* HEADER PRINCIPAL */
+      .header {
+        background: #1a1a2e;
+        color: white;
+        padding: 40px 30px;
+        text-align: center;
+      }
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      /* MENÚS NAVEGACIÓN */
+      .nav {
+        padding: 40px 20px;
+        background: #16213e;
+        transition: all 0.3s;
+        height: calc(100vh - 140px);
+        overflow-y: auto;
+      }
+
+      /* ✅ GRID PARA MARCAS - DESKTOP: 5 COLUMNAS */
+      .nav-brand {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        align-content: start;
+        padding: 40px 30px;
+      }
+
+      /* ✅ NAV-CAT: FLEX COLUMN (BOTÓN ARRIBA + GRID ABAJO) */
+      .nav-cat {
+        display: flex;
+        flex-direction: column;
+        padding: 40px 30px;
+        gap: 20px;
+      }
+
+      /* ✅ CONTENEDOR BOTÓN VOLVER - SEPARADO */
+      .back-btn-container {
+        align-self: flex-start; /* ✅ Pegado a la izquierda */
+      }
+
+      /* ✅ BOTÓN VOLVER - COMPACTO */
+      .back-btn {
+        background: linear-gradient(135deg, #facc15, #eab308) !important;
+        color: #1a1a2e !important; /* Texto oscuro para máximo contraste */
+        padding: 12px 24px !important;
+        font-size: 1.1em !important;
+        height: 50px !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 10px !important;
+        cursor: pointer !important;
+        font-weight: 700 !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 6px 20px rgba(250, 204, 21, 0.5),
+          0 2px 4px rgba(0, 0, 0, 0.3) !important;
+        text-shadow: none !important;
+      }
+      .back-btn:hover {
+        background: linear-gradient(135deg, #eab308, #ca8a04) !important;
+        color: #1a1a2e !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 12px 30px rgba(250, 204, 21, 0.7),
+          0 4px 8px rgba(0, 0, 0, 0.4) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+      }
+      .back-btn:active {
+        transform: translateY(-1px) !important;
+      }
+
+      /* ✅ GRID CATEGORÍAS - SEPARADO DEL BOTÓN */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        flex: 1; /* ✅ Ocupa todo el espacio restante */
+      }
+
+      /* BOTONES EN GRID */
+      .btn {
+        width: 100%;
+        height: 120px;
+        padding: 15px;
+        background: #1e3a8a !important;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: all 0.3s;
+        font-weight: bold;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+
+      /* RESPONSIVE - MOBILE: 2 COLUMNAS */
+      @media (max-width: 1200px) {
+        .nav-brand {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 15px;
+          padding: 30px 20px;
+        }
+        .categories-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 15px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .nav-brand {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+          padding: 30px 15px;
+        }
+        .categories-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: 30px 20px;
+        }
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .nav-brand,
+        .categories-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+          padding: 30px 15px;
+        }
+
+        .btn {
+          height: 100px;
+          font-size: 1em;
+          padding: 12px;
+        }
+
+        .back-btn {
+          height: 45px !important;
+          font-size: 1em !important;
+          padding: 10px 20px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .nav-brand,
+        .categories-grid {
+          grid-template-columns: 1fr;
+          padding: 30px 20px;
+        }
+
+        .btn {
+          height: 80px;
+        }
+      }
+    </style>
+
+    <!-- =========================================== -->
+    <!-- ✅ SECCIÓN 4: JAVASCRIPT PRINCIPAL         -->
+    <!-- =========================================== -->
+    <script>
+      // ===========================================
+      // ✅ DATA: URLs DE TODAS LAS MARCAS
+      // ===========================================
+      const catalogData = {
+        hikvision: {
+          redes: [{ url: "./hikvision/redes/redes.html" }],
+          "cctv-analogico": [{ url: "./hikvision/analogico/analogico.html" }],
+          "cctv-ip": [{ url: "./hikvision/ip/ip.html" }],
+          "control-de-acceso": [{ url: "./hikvision/acceso/acceso.html" }],
+          "video-portero": [{ url: "./hikvision/portero/portero.html" }],
+          "pantallas-interactivas": [
+            { url: "./hikvision/interactiva/interactiva.html" },
+          ],
+        },
+        hilook: {
+          "cctv-analogico": [{ url: "./hilook/analogo/analogo.html" }],
+          "cctv-ip": [{ url: "./hilook/ip/ip.html" }],
+        },
+        dahua: {
+          "cctv-analogico": [{ url: "./dahua/analogico/analogico.html" }],
+          "cctv-ip": [{ url: "./dahua/ip/ip.html" }],
+        },
+        maxiprint: {
+          toner: [{ url: "./maxiprint/toner/toner.html" }],
+          tintas: [{ url: "./maxiprint/tinta/tinta.html" }],
+          cartuchos: [{ url: "./maxiprint/cartucho/cartucho.html" }],
+        },
+        fantech: {
+          teclados: [{ url: "./fantech/teclado/teclado.html" }],
+          mouse: [{ url: "./fantech/mouse/mouse.html" }],
+          audifonos: [{ url: "./fantech/audifono/audifono.html" }],
+          "mouse-pad": [{ url: "./fantech/mousepad/mousepad.html" }],
+        },
+        vigi: {
+          camaras: [{ url: "./vigi/camara/camara.html" }],
+          nvr: [{ url: "./vigi/nvr/nvr.html" }],
+        },
+      };
+
+      let currentBrand = "";
+
+      // ===========================================
+      // ✅ FUNCIÓN 1: CLICK EN MARCA
+      // ===========================================
+      function handleBrandClick(brand, url) {
+        if (url) {
+          window.open(url, "_blank");
+          return;
+        }
+        showCategories(brand);
+      }
+
+      // ===========================================
+      // ✅ FUNCIÓN 2: MOSTRAR CATEGORÍAS
+      // ===========================================
+      function showCategories(brand) {
+        currentBrand = brand;
+        document.getElementById("navBrands").style.display = "none";
+        const navCats = document.getElementById("navCategories");
+        const categoriesGrid = navCats.querySelector(".categories-grid");
+        navCats.style.display = "flex"; // ✅ FLEX MODE
+
+        const categories = {
+          hikvision: [
+            "Redes",
+            "CCTV Analógico",
+            "CCTV IP",
+            "Control de Acceso",
+            "Video Portero",
+            "Pantallas Interactivas",
+          ],
+          hilook: ["CCTV Analógico", "CCTV IP"],
+          dahua: ["CCTV Analógico", "CCTV IP"],
+          maxiprint: ["Toner", "Tintas", "Cartuchos"],
+          fantech: ["Teclados", "Mouse", "Audifonos", "Mouse Pad"],
+          vigi: ["Camaras", "NVR"],
+        };
+
+        // ✅ LIMPIAR GRID PREVIO
+        categoriesGrid.innerHTML = "";
+
+        // ✅ GENERAR BOTONES CATEGORÍAS
+        categories[brand].forEach((cat) => {
+          const btn = document.createElement("button");
+          btn.className = "btn";
+          btn.textContent = cat;
+          btn.dataset.cat = cat
+            .toLowerCase()
+            .replace(/ /g, "-")
+            .replace(/[ñó]/g, (m) => (m === "ñ" ? "n" : "o"));
+          btn.onclick = () => showCatalog(brand, btn.dataset.cat);
+          categoriesGrid.appendChild(btn);
+        });
+      }
+
+      // ===========================================
+      // ✅ FUNCIÓN 3: ABRIR CATÁLOGO NUEVA PESTAÑA
+      // ===========================================
+      function showCatalog(brand, cat) {
+        const item = catalogData[brand]?.[cat]?.[0];
+        if (item?.url) {
+          window.open(item.url, "_blank");
+          document.getElementById("navCategories").style.display = "none";
+          document.getElementById("navBrands").style.display = "grid";
+          return;
+        }
+      }
+
+      // ===========================================
+      // ✅ FUNCIÓN 4: NAVEGACIÓN ATRÁS
+      // ===========================================
+      function goBack(level) {
+        if (level === "brands") {
+          document.getElementById("navCategories").style.display = "none";
+          document.getElementById("navBrands").style.display = "grid";
+        }
+      }
+
+      // ===========================================
+      // ✅ EVENT LISTENERS
+      // ===========================================
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("#navBrands .btn").forEach((btn) => {
+          btn.onclick = () => {
+            const brand = btn.dataset.brand;
+            const url = btn.dataset.url;
+            handleBrandClick(brand, url);
+          };
+        });
+      });
+    </script>
+  </body>
+</html>
